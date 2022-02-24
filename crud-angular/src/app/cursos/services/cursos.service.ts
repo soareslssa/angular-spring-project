@@ -1,5 +1,7 @@
+import { Curso } from './../cursos/model/curso';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs';
 
 
 @Injectable({
@@ -8,15 +10,17 @@ import { Injectable } from '@angular/core';
 
 export class CursosService {
 
-  // Injeção de dependencia para conexão api java
+  private readonly API = '/assets/cursos.json';
 
+  // Injeção de dependencia HttpClient para conexão api
   constructor(private httpClient: HttpClient) { }
 
   // retorna uma lista de cursos
   list(){
-    return [
-      {_id: "1", nome:"Angular", categoria:"Teste"} ,
-      {_id: "2", nome:"Spring", categoria:"Teste 2"}
-    ];
+    return this.httpClient.get<Curso[]>(this.API)
+    .pipe(
+      // apenas para debug
+      tap(cursos => console.log(cursos))
+    );
   }
 }
