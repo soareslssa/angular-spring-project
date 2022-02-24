@@ -1,7 +1,7 @@
 import { Curso } from './../cursos/model/curso';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { delay, first, tap } from 'rxjs';
 
 
 @Injectable({
@@ -19,8 +19,9 @@ export class CursosService {
   list(){
     return this.httpClient.get<Curso[]>(this.API)
     .pipe(
-      // apenas para debug
-      tap(cursos => console.log(cursos))
+      first(),
+      delay(5000), // para testar o spinner
+      tap(cursos => console.log(cursos))  // apenas para debug
     );
   }
 }

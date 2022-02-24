@@ -11,7 +11,8 @@ import { Curso } from './model/curso';
 
 export class CursosComponent implements OnInit {
 
-  cursos: Observable<Curso[]>;
+  // notacao $ para indicar um observable
+  cursos$: Observable<Curso[]>;
 
   displayedColumns = ['nome', 'categoria'];
 
@@ -19,7 +20,7 @@ export class CursosComponent implements OnInit {
 
   constructor(private cursosService: CursosService) {
 
-   this.cursos = this.cursosService.list();
+   this.cursos$ = this.cursosService.list();
 
    }
 
