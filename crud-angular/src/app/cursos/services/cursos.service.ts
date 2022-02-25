@@ -24,7 +24,7 @@ export class CursosService {
     return this.httpClient.get<Curso[]>(this.API)
     .pipe(
       first(),
-      delay(5000), // para testar o spinner
+     // delay(5000), // para testar o spinner
       tap(cursos => console.log(cursos)),  // apenas para debug
     );
   }
