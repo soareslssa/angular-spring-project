@@ -1,7 +1,9 @@
+import { ErrorDialogComponent } from './../../shared/components/error-dialog/error-dialog.component';
 import { Curso } from './../cursos/model/curso';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, first, tap } from 'rxjs';
+import { catchError, delay, first, of, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable({
@@ -13,7 +15,9 @@ export class CursosService {
   private readonly API = '/assets/cursos.json';
 
   // Injeção de dependencia HttpClient para conexão api
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    public dialog: MatDialog) { }
 
   // retorna uma lista de cursos
   list(){
@@ -21,7 +25,7 @@ export class CursosService {
     .pipe(
       first(),
       delay(5000), // para testar o spinner
-      tap(cursos => console.log(cursos))  // apenas para debug
+      tap(cursos => console.log(cursos)),  // apenas para debug
     );
   }
 }
