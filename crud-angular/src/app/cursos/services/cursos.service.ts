@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class CursosService {
 
-  private readonly API = '/assets/cursos.json';
+  private readonly API = 'api/cursos';
 
   // Injeção de dependencia HttpClient para conexão api
   constructor(
