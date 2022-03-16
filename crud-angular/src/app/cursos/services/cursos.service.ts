@@ -2,7 +2,7 @@ import { ErrorDialogComponent } from './../../shared/components/error-dialog/err
 import { Curso } from './../cursos/model/curso';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, first, of, tap } from 'rxjs';
+import { catchError, delay, first, of, tap, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -31,6 +31,15 @@ export class CursosService {
 
   save(novoCurso: Curso){
     return this.httpClient.post<Curso>(this.API, novoCurso);
+  }
+
+  update(curso: Curso): Observable<Curso>{
+    return this.httpClient.put<Curso>(this.API, curso);
+  }
+
+  delete(id: number): Observable<any>{
+    console.log(id);
+    return this.httpClient.delete<any>(`${this.API}?id=${id}`);
   }
 
 }

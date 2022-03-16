@@ -1,5 +1,6 @@
+import { MatTable } from '@angular/material/table';
 import { CursoDialogComponent } from './../../shared/components/curso-dialog/curso-dialog.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -14,7 +15,10 @@ import { Curso } from './model/curso';
 export class CursosComponent implements OnInit {
   cursos$: Observable<Curso[]>;
 
-  displayedColumns = ['nome', 'categoria', 'acoes'];
+  @ViewChild(MatTable)
+  tabelaCursos!: MatTable<any>
+
+  displayedColumns = ['id','nome', 'categoria', 'acoes'];
 
   constructor(private cursosService: CursosService, public dialog: MatDialog) {
     this.cursos$ = this.cursosService.list().pipe(
@@ -35,7 +39,7 @@ export class CursosComponent implements OnInit {
 
   addCurso(curso: Curso | null): void {
     const dialogRef = this.dialog.open(CursoDialogComponent, {
-      width: '250px',
+      width: 'auto',
       data:
         curso === null
           ? {
@@ -45,15 +49,22 @@ export class CursosComponent implements OnInit {
           : curso,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.tabelaCursos.renderRows();
+    });
   }
 
-  editCurso(curso: Curso): void {
-    const dialogRef = this.dialog.open(CursoDialogComponent, {
-      width: '250px',
-      data:curso
-    });
+  deleteCurso(id: number){
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    this.cursosService.delete(id)
+    .pipe(
+      catchError((error) => {
+        this.onError('Erro ao deletar curso.');
+        return of([]);
+      }))
+    .subscribe((data: Curso) => {
+      this.tabelaCursos.renderRows();
+    }
+    );
   }
 }
