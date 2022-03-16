@@ -1,4 +1,11 @@
 <mat-card>
+  <button mat-flat-button color="accent" (click)="addCurso(null)">
+    Novo Curso
+  <mat-icon>add</mat-icon>
+  </button>
+</mat-card>
+
+<mat-card>
   <mat-toolbar color="primary">
     <span>Cursos Disponíveis</span>
   </mat-toolbar>
@@ -15,6 +22,19 @@
         <td mat-cell *matCellDef="let c">
           {{ c.categoria }}
         <mat-icon aria-label="Categoria do curso">{{c.categoria | categoria}}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let c">
+          <button mat-icon-button color="primary" (click)="editCurso(c)" >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
       </ng-container>
 

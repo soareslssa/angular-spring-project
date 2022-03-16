@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Curso</h1>
+
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="element.nome">
+  </mat-form-field>
+
+  <br/>
+
+  <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <input matInput [(ngModel)]="element.categoria">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-flat-button color="warn">Fechar</button>
+  <button mat-flat-button color="primary">Criar</button>
+</div>

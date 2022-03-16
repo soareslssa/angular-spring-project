@@ -28,4 +28,9 @@ export class CursosService {
       tap(cursos => console.log(cursos)),  // apenas para debug
     );
   }
+
+  save(novoCurso: Curso){
+    return this.httpClient.post<Curso>(this.API, novoCurso);
+  }
+
 }
